@@ -3,7 +3,7 @@ const { promisify } = require("util")
 const jwt = require("jsonwebtoken")
 
 const errorTypes = require("../constant/errorTypes")
-const userModel = require("../model/")
+const userModel = require("../model/user")
 const { md5Password } = require("../utils/md5Password")
 const { PUBLIC_KEY } = require("../config/index")
 
@@ -18,7 +18,6 @@ class AuthMiddleware {
 			const error = new Error(errorTypes.USER_OR_PASSWORD_EMAIL_IS_NOT_EMPTY)
 			return ctx.app.emit("error", error, ctx)
 		}
-
 		// 2. 判断账号是否存在, 存在则判断密码是否正确
 		try {
 			const user = await userModel.findOne({ account: account })
@@ -28,6 +27,7 @@ class AuthMiddleware {
 			// 验证密码是否正确
 			const hashPassword = md5Password(password)
 			// 密码正确
+			debugger
 			if (hashPassword === user.hashPassword) {
 				ctx.user = {
 					account: user.account,
@@ -39,7 +39,7 @@ class AuthMiddleware {
 					nickname: user.nickname || null,
 					avatar: user.avatar || null,
 				}
-				next()
+				await next()
 			} else {
 				// 密码不正确
 				throw errorTypes.PASSWORD_IS_NOT_RIGHT
@@ -52,7 +52,6 @@ class AuthMiddleware {
 	// 验证注册信息
 	async verifyRegisterInfo(ctx, next) {
 		const { account, password, email } = ctx.request.body
-
 		// 1. 判断是否输入了账号和密码
 		if (!account || !password || !email) {
 			const error = errorTypes.USER_OR_PASSWORD_EMAIL_IS_NOT_EMPTY
@@ -70,11 +69,11 @@ class AuthMiddleware {
 				...ctx.request.body,
 				role: "test",
 				state: 1,
-				user_id: Math.random() * 100000,
+				user_id: Math.floor(Math.random() * 100000000),
 				hashPassword: md5Password(password),
 			}
 			const res = await userModel.create(obj)
-			next()
+			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)
 		}
@@ -83,12 +82,15 @@ class AuthMiddleware {
 	// 验证token
 	async verifyToken(ctx, next) {
 		const { authorization: token } = ctx.request.header
+		if (!token) {
+			return ctx.app.emit("error", new Error(errorTypes.MUST_TOKEN), ctx)
+		}
 		try {
 			const result = await verify(token.split(" ")[1], PUBLIC_KEY, {
 				algorithms: "RS256",
 			})
 			ctx.user = result
-			next()
+			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)
 		}

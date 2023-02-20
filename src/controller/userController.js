@@ -1,8 +1,10 @@
 const { returnObj } = require("../utils/returnUserObj")
 
 class UserController {
-	getMenuList(ctx, next) {
+	//返回menu数据
+	async menuList(ctx, next) {
 		const { user, role } = ctx
+		// console.log(user)
 		debugger
 		ctx.body = {
 			status: 200,
@@ -14,7 +16,19 @@ class UserController {
 				},
 			},
 		}
-		console.log(returnObj(user))
+	}
+
+	// 修改信息
+	updateUserInfo(ctx, next) {
+		const user = ctx.user
+		delete user._id
+		ctx.body = {
+			status: 201,
+			message: "修改成功",
+			result: {
+				data: [],
+			},
+		}
 	}
 }
 

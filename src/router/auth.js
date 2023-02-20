@@ -14,7 +14,7 @@ authRouter.post(
 	"/menulist",
 	authMiddleware.verifyToken,
 	userMiddleware.getMenuList,
-	UserController.getMenuList
+	UserController.menuList
 )
 
 module.exports = authRouter

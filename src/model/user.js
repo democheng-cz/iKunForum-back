@@ -7,7 +7,10 @@ const userSchema = mongoose.Schema({
 	password: String,
 	hashPassword: String,
 	user_id: Number,
-	avatar: String,
+	avatar: {
+		type: String,
+		default: null,
+	},
 	createAt: {
 		type: Date,
 		default: Date.now,
@@ -20,7 +23,10 @@ const userSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	nick_name: String,
+	nick_name: {
+		type: String,
+		default: null,
+	},
 	role: {
 		type: String,
 		required: true,

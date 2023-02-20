@@ -1,10 +1,11 @@
+const path = require("path")
+
 const Koa = require("koa")
-// const bodyParser = require("koa-bodyparser")
 const koaBody = require("koa-body").default
+const koaStatic = require("koa-static")
 
 const mongoose = require("./model")
 const useRoutes = require("./router")
-const userModel = require("./model/user")
 const errorHandle = require("./middleware/errorMiddleware")
 
 const app = new Koa()
@@ -15,8 +16,18 @@ app.useRoutes = useRoutes
 app.use(
 	koaBody({
 		multipart: true,
+		formidable: {
+			// 上传目录
+			uploadDir: path.join(__dirname, "./static/img"),
+			// 保留文件扩展名
+			keepExtensions: true,
+			multipart: true,
+		},
 	})
 )
+
+// 暴露本地静态文件
+app.use(koaStatic(path.resolve(__dirname, "./static")))
 
 // 注册所有路由
 app.useRoutes()

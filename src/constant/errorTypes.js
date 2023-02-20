@@ -32,6 +32,9 @@ const DUPLICATE_LABEL = "duplicate_label"
 // 非法token
 const INVALID_TOKEN = "invalid_token"
 
+// 必须携带token
+const MUST_TOKEN = "must_token"
+
 module.exports = {
 	USER_OR_PASSWORD_EMAIL_IS_NOT_EMPTY,
 	USER_ALREADY_EXISTS,
@@ -44,4 +47,5 @@ module.exports = {
 	CHECK_THE_PARAMS_TO_SQL,
 	DUPLICATE_LABEL,
 	INVALID_TOKEN,
+	MUST_TOKEN,
 }

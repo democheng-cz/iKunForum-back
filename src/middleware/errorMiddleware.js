@@ -53,6 +53,10 @@ function errorHandle(err, ctx) {
 			message = "非法的token"
 			break
 
+		case errorTypes.MUST_TOKEN:
+			resStatus = 403
+			message = "必须携带token"
+			break
 		default:
 			// console.log("为什么")
 			resStatus = 404

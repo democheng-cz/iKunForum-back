@@ -14,7 +14,7 @@ class AuthController {
 			message: "登录成功",
 			result: {
 				data: ctx.user,
-				token: `Bear ${token}`,
+				token: `Bearer ${token}`,
 			},
 		}
 	}

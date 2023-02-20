@@ -18,7 +18,7 @@ app.use(
 		multipart: true,
 		formidable: {
 			// 上传目录
-			uploadDir: path.join(__dirname, "./static/img"),
+			uploadDir: path.join(__dirname, "./static/test"),
 			// 保留文件扩展名
 			keepExtensions: true,
 			multipart: true,

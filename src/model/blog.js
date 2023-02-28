@@ -7,6 +7,7 @@ const blogSchema = mongoose.Schema({
 		default: uuidv4(),
 	},
 	category_id: String,
+	category_name: String,
 	desc: {
 		type: String,
 		default: null,

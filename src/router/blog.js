@@ -23,9 +23,6 @@ blogRouter.post(
 	blogController.uploadBlog
 )
 
-// 上传blog
-// blogRouter.post("/upload", authMiddleware.verifyToken)
-
 // 获取blog分类
 blogRouter.get(
 	"/category",
@@ -40,6 +37,14 @@ blogRouter.post(
 	verifyToken,
 	blogMiddleware.uploadCover,
 	blogController.uploadCover
+)
+
+// 获取博客详情
+blogRouter.get(
+	"/:id",
+	verifyToken,
+	blogMiddleware.getBlogDetail,
+	blogController.getBlogDetail
 )
 
 module.exports = blogRouter

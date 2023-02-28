@@ -10,9 +10,8 @@ class BlogController {
 
 	// 获取博客列表
 	getBlogList(ctx, next) {
-		console.log("first")
 		const { blogs, count } = ctx.blog
-		console.log(blogs)
+		// console.log(blogs)
 		ctx.body = {
 			status: 200,
 			message: "请求成功",
@@ -42,6 +41,18 @@ class BlogController {
 			message: "上传成功",
 			result: {
 				filePath: ctx.cover,
+			},
+		}
+	}
+
+	// 获取博客详情
+	getBlogDetail(ctx, next) {
+		const { blog } = ctx
+		ctx.body = {
+			status: 200,
+			message: "请求成功",
+			result: {
+				data: [blog],
 			},
 		}
 	}

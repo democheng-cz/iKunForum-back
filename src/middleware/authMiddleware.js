@@ -11,9 +11,9 @@ const verify = promisify(jwt.verify)
 class AuthMiddleware {
 	// 验证登录信息
 	async verifyInfo(ctx, next) {
-		console.log("first")
+		// console.log("first")
 		const { account, password } = ctx.request.body
-		console.log(account, password)
+		// console.log(account, password)
 		// 1.判断是否输入了账号和密码(一般由前端判断)
 		// console.log(account, password)
 		if (!account || !password) {
@@ -41,7 +41,7 @@ class AuthMiddleware {
 					nickname: user.nick_name || null,
 					avatar: user.avatar || null,
 				}
-				console.log(ctx.user)
+				// console.log(ctx.user)
 				await next()
 			} else {
 				// 密码不正确

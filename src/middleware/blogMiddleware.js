@@ -5,7 +5,7 @@ class BlogMiddleware {
 		try {
 			const baseUrl = "http://localhost:8888/"
 			const { title, desc, content, status, category_id } = ctx.request.body
-			console.log(category_id)
+			// console.log(category_id)
 			const { nickname, user_id } = ctx.user
 			const { cover } = ctx.request.files
 			const filepath = baseUrl + cover.filepath.split("\\static\\")[1]
@@ -85,6 +85,18 @@ class BlogMiddleware {
 		} catch (error) {
 			throw ctx.app.emit("error", new Error(error), ctx)
 		}
+	}
+
+	// 获取blog详情
+	async getBlogDetail(ctx, next) {
+		console.log(ctx)
+		const { id } = ctx.params
+		// console.log(ctx.params)
+		// console.log(blog_id)
+		const blog = await blogModel.findOne({ blog_id: id })
+		console.log(blog)
+		ctx.blog = blog
+		await next()
 	}
 }
 

@@ -1,6 +1,7 @@
 const blogModel = require("../model/blog")
 const categoryModel = require("../model/category")
 class BlogMiddleware {
+	// 删除blog
 	async uploadBlog(ctx, next) {
 		try {
 			const baseUrl = "http://localhost:8888/"
@@ -97,6 +98,17 @@ class BlogMiddleware {
 		console.log(blog)
 		ctx.blog = blog
 		await next()
+	}
+
+	// 根据id删除blog
+	async deleteBlog(ctx, next) {
+		try {
+			const { blog_id } = ctx.params
+			await blogModel.deleteOne({ blog_id })
+			await next()
+		} catch (error) {
+			throw ctx.app.emit("error", new Error(error), ctx)
+		}
 	}
 }
 

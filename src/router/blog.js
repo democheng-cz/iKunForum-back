@@ -47,4 +47,12 @@ blogRouter.get(
 	blogController.getBlogDetail
 )
 
+// 根据博客id删除博客
+blogRouter.delete(
+	"/:blog_id",
+	verifyToken,
+	blogMiddleware.deleteBlog,
+	blogController.deleteBlog
+)
+
 module.exports = blogRouter

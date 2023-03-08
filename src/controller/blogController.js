@@ -56,6 +56,15 @@ class BlogController {
 			},
 		}
 	}
+
+	// 删除blog
+	deleteBlog(ctx, next) {
+		ctx.body = {
+			status: 200,
+			message: "删除成功",
+			result: {},
+		}
+	}
 }
 
 module.exports = new BlogController()

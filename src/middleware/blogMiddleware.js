@@ -60,7 +60,11 @@ class BlogMiddleware {
 			ctx.request.body
 		const { user } = ctx
 		try {
-			await blogModel.create({ ...ctx.request.body, user_id: user.user_id })
+			await blogModel.create({
+				...ctx.request.body,
+				user_id: user.user_id,
+				user_name: user.nickname,
+			})
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

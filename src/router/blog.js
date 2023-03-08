@@ -55,4 +55,7 @@ blogRouter.delete(
 	blogController.deleteBlog
 )
 
+// 根据id修改update
+blogRouter.patch("/:blog_id", verifyToken)
+
 module.exports = blogRouter

@@ -7,23 +7,27 @@ const userMiddleware = require("../middleware/userMiddleware")
 
 const userRouter = new Router({ prefix: "/user" })
 
-userRouter.get("/", () => {
-	console.log("first")
-})
-
 // 上传头像
 userRouter.post(
-	"/file/avatar",
+	"/avatar",
 	authMiddleware.verifyToken,
 	userMiddleware.uploadAvatar
 )
 
 // 修改信息
 userRouter.patch(
-	"/userinfo",
+	"/update",
 	authMiddleware.verifyToken,
 	userMiddleware.updateUserInfo,
 	userController.updateUserInfo
+)
+
+// 获取用户列表
+userRouter.get(
+	"/",
+	authMiddleware.verifyToken,
+	userMiddleware.getUserList,
+	userController.getUserList
 )
 
 module.exports = userRouter

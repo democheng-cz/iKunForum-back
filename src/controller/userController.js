@@ -30,6 +30,18 @@ class UserController {
 			},
 		}
 	}
+
+	// 获取用户列表
+	getUserList(ctx, next) {
+		const { userList } = ctx
+		ctx.body = {
+			status: 200,
+			message: "请求成功",
+			result: {
+				data: userList,
+			},
+		}
+	}
 }
 
 module.exports = new UserController()

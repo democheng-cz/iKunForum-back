@@ -33,7 +33,7 @@ blogRouter.get(
 
 // 上传封面
 blogRouter.post(
-	"/upload",
+	"/image",
 	verifyToken,
 	blogMiddleware.uploadCover,
 	blogController.uploadCover
@@ -56,6 +56,11 @@ blogRouter.delete(
 )
 
 // 根据id修改update
-blogRouter.patch("/:blog_id", verifyToken)
+blogRouter.patch(
+	"/update",
+	verifyToken,
+	blogMiddleware.updateBlog,
+	blogController.updateBlog
+)
 
 module.exports = blogRouter

@@ -94,12 +94,10 @@ class BlogMiddleware {
 
 	// 获取blog详情
 	async getBlogDetail(ctx, next) {
-		console.log(ctx)
 		const { id } = ctx.params
 		// console.log(ctx.params)
 		// console.log(blog_id)
 		const blog = await blogModel.findOne({ blog_id: id })
-		console.log(blog)
 		ctx.blog = blog
 		await next()
 	}
@@ -112,6 +110,19 @@ class BlogMiddleware {
 			await next()
 		} catch (error) {
 			throw ctx.app.emit("error", new Error(error), ctx)
+		}
+	}
+
+	async updateBlog(ctx, next) {
+		const { blog_id } = ctx.request.body
+		try {
+			const res = await blogModel.updateOne(
+				{ blog_id },
+				{ ...ctx.request.body }
+			)
+			await next()
+		} catch (error) {
+			return ctx.app.emit("error", new Error(error), ctx)
 		}
 	}
 }

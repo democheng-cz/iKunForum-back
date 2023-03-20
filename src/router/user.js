@@ -9,17 +9,25 @@ const userRouter = new Router({ prefix: "/user" })
 
 // 上传头像
 userRouter.post(
-	"/avatar",
+	"/image",
 	authMiddleware.verifyToken,
 	userMiddleware.uploadAvatar
 )
 
-// 修改信息
+// 修改用户信息
 userRouter.patch(
 	"/update",
 	authMiddleware.verifyToken,
 	userMiddleware.updateUserInfo,
 	userController.updateUserInfo
+)
+
+// 修改信息
+userRouter.patch(
+	"/update/state",
+	authMiddleware.verifyToken,
+	userMiddleware.updateUserState,
+	userController.updateUserState
 )
 
 // 获取用户列表

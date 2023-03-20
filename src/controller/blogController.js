@@ -40,7 +40,7 @@ class BlogController {
 			status: 200,
 			message: "上传成功",
 			result: {
-				filePath: ctx.cover,
+				filepath: ctx.cover,
 			},
 		}
 	}
@@ -63,6 +63,17 @@ class BlogController {
 			status: 200,
 			message: "删除成功",
 			result: {},
+		}
+	}
+
+	// 修改blog
+	updateBlog(ctx, next) {
+		ctx.body = {
+			status: 200,
+			message: "修改成功",
+			result: {
+				data: [],
+			},
 		}
 	}
 }

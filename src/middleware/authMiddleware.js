@@ -39,8 +39,8 @@ class AuthMiddleware {
 					updateAt: user.updateAt,
 					nickname: user.nick_name || null,
 					avatar: user.avatar || null,
+					role_id: user._doc.role_id,
 				}
-				// console.log(ctx.user)
 				await next()
 			} else {
 				// 密码不正确

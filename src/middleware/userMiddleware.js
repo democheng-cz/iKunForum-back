@@ -3,18 +3,6 @@ const roleModel = require("../model/role")
 const userModel = require("../model/user")
 
 class UserMiddleware {
-	// 根据角色获取菜单
-	async getMenuList(ctx, next) {
-		const { role } = ctx.user
-		try {
-			const result = await roleModel.findOne({ role })
-			ctx.role = result
-			await next()
-		} catch (error) {
-			return ctx.app.emit("error", new Error(error), ctx)
-		}
-	}
-
 	// 上传头像
 	async uploadAvatar(ctx, next) {
 		const baseUrl = "http://localhost:8888/"
@@ -51,10 +39,24 @@ class UserMiddleware {
 	async updateUserInfo(ctx, next) {
 		const user = ctx.request.body
 		const user_id = ctx.request.body.user_id || ctx.user.user_id
-		// console.log(user_id)
 		try {
-			let res = await userModel.findOneAndUpdate({ user_id }, { ...user })
-			// console.log(res)
+			const resRole = await roleModel.findOne({ role_id: user.role_id })
+			let res = await userModel.findOneAndUpdate(
+				{ _id: user._id },
+				{ ...user, role: resRole.role }
+			)
+			await next()
+		} catch (error) {
+			return ctx.app.emit("error", new Error(error), ctx)
+		}
+	}
+
+	// 修改用户状态
+	async updateUserState(ctx, next) {
+		const state = ctx.request.body.state
+		const user_id = ctx.request.body.user_id || ctx.user.user_id
+		try {
+			await userModel.findOneAndUpdate({ user_id }, { state })
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)
@@ -73,24 +75,6 @@ class UserMiddleware {
 				.skip((pageNum - 1) * pageSize)
 				.limit(pageSize)
 			ctx.userList = userList
-			await next()
-		} catch (error) {
-			return ctx.app.emit("error", new Error(error), ctx)
-		}
-	}
-
-	// 修改其他用户信息
-	async updateOtherInfo(ctx, next) {
-		const baseUrl = "http://localhost:8888/"
-		const user = ctx.request.body
-		console.log(user)
-		if (ctx.request.files) {
-			const filepath =
-				baseUrl + ctx.request.files.avatar.filepath.split("\\static\\")[1]
-			user.avatar = filepath
-		}
-		try {
-			await userModel.findOneAndUpdate({ user_id: user.user_id }, { ...user })
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

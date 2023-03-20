@@ -31,6 +31,17 @@ class UserController {
 		}
 	}
 
+	// 修改信息
+	updateUserState(ctx, next) {
+		ctx.body = {
+			status: 201,
+			message: "修改成功",
+			result: {
+				data: [],
+			},
+		}
+	}
+
 	// 获取用户列表
 	getUserList(ctx, next) {
 		const { userList } = ctx

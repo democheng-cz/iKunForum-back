@@ -7,7 +7,10 @@ const userSchema = mongoose.Schema(
 		},
 		password: String,
 		hashPassword: String,
-		user_id: Number,
+		user_id: {
+			type: String,
+			required: true,
+		},
 		avatar: {
 			type: String,
 			default: null,
@@ -30,6 +33,9 @@ const userSchema = mongoose.Schema(
 		state: {
 			type: Number,
 			default: 1,
+		},
+		desc: {
+			type: String,
 		},
 	},
 	{

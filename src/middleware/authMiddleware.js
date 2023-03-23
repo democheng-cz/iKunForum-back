@@ -6,6 +6,7 @@ const errorTypes = require("../constant/errorTypes")
 const userModel = require("../model/user")
 const { md5Password } = require("../utils/md5Password")
 const { PUBLIC_KEY } = require("../config/index")
+const { v4: uuidv4 } = require("uuid")
 
 const verify = promisify(jwt.verify)
 class AuthMiddleware {
@@ -69,12 +70,11 @@ class AuthMiddleware {
 			}
 			const obj = {
 				...ctx.request.body,
-				role: "test",
-				state: 1,
-				user_id: Math.floor(Math.random() * 100000000),
+				// user_id: Math.floor(Math.random() * 100000000),
+				user_id: uuidv4(),
 				hashPassword: md5Password(password),
 			}
-			const res = await userModel.create(obj)
+			await userModel.create(obj)
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

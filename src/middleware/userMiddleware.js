@@ -45,6 +45,7 @@ class UserMiddleware {
 				{ _id: user._id },
 				{ ...user, role: resRole.role }
 			)
+			ctx.user = res
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

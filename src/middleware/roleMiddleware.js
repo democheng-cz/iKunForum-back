@@ -21,7 +21,7 @@ class RoleMiddleware {
 			await next()
 		} catch (error) {
 			// console.log(error)
-			return crx.app.emit("error", new Error(error), ctx)
+			return ctx.app.emit("error", new Error(error), ctx)
 		}
 	}
 

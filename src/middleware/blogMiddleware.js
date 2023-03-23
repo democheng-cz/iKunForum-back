@@ -56,15 +56,14 @@ class BlogMiddleware {
 
 	// 上传blog
 	async uploadBlog(ctx, next) {
-		const { category_id, title, desc, content, status, cover } =
-			ctx.request.body
 		const { user } = ctx
 		try {
-			await blogModel.create({
+			const res = await blogModel.create({
 				...ctx.request.body,
 				user_id: user.user_id,
-				user_name: user.nickname,
+				user_name: user.nick_name,
 			})
+			console.log(res)
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

@@ -4,7 +4,9 @@ class BlogController {
 		ctx.body = {
 			status: 200,
 			message: "上传成功",
-			result: {},
+			result: {
+				data: [],
+			},
 		}
 	}
 

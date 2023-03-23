@@ -21,7 +21,6 @@ class UserController {
 	// 修改信息
 	updateUserInfo(ctx, next) {
 		const user = ctx.user
-		delete user._id
 		ctx.body = {
 			status: 201,
 			message: "修改成功",
@@ -31,7 +30,7 @@ class UserController {
 		}
 	}
 
-	// 修改信息
+	// 修改用户状态
 	updateUserState(ctx, next) {
 		ctx.body = {
 			status: 201,

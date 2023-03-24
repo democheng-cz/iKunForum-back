@@ -6,7 +6,7 @@ class AuthController {
 		// 生成token
 		const token = jwt.sign({ ...ctx.user }, PRIVATE_KEY, {
 			algorithm: "RS256",
-			expiresIn: "2 days", // token有效时间一天
+			expiresIn: "2 days", // token有效时间两天
 		})
 		// debugger
 		ctx.body = {
@@ -14,7 +14,7 @@ class AuthController {
 			message: "登录成功",
 			result: {
 				data: ctx.user,
-				token: `Bear ${token}`,
+				token: `Bearer ${token}`,
 			},
 		}
 	}

@@ -35,6 +35,8 @@ const INVALID_TOKEN = "invalid_token"
 // 必须携带token
 const MUST_TOKEN = "must_token"
 
+const TOKEN_EXPIRED = "jwt expired"
+
 module.exports = {
 	USER_OR_PASSWORD_EMAIL_IS_NOT_EMPTY,
 	USER_ALREADY_EXISTS,
@@ -48,4 +50,5 @@ module.exports = {
 	DUPLICATE_LABEL,
 	INVALID_TOKEN,
 	MUST_TOKEN,
+	TOKEN_EXPIRED,
 }

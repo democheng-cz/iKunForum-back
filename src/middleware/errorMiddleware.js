@@ -7,6 +7,7 @@ const errorTypes = require("../constant/errorTypes")
 function errorHandle(err, ctx) {
 	let message
 	let resStatus
+	console.log(err.message)
 	switch (err.message) {
 		case errorTypes.USER_OR_PASSWORD_EMAIL_IS_NOT_EMPTY:
 			resStatus = 400
@@ -56,6 +57,10 @@ function errorHandle(err, ctx) {
 		case errorTypes.MUST_TOKEN:
 			resStatus = 403
 			message = "必须携带token"
+			break
+		case errorTypes.TOKEN_EXPIRED:
+			resStatus = 401
+			message = "token已过期"
 			break
 		default:
 			// console.log("为什么")

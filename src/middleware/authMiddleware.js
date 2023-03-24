@@ -6,11 +6,13 @@ const errorTypes = require("../constant/errorTypes")
 const userModel = require("../model/user")
 const { md5Password } = require("../utils/md5Password")
 const { PUBLIC_KEY } = require("../config/index")
+const { v4: uuidv4 } = require("uuid")
 
 const verify = promisify(jwt.verify)
 class AuthMiddleware {
 	// 验证登录信息
 	async verifyInfo(ctx, next) {
+		// console.log("first")
 		const { account, password } = ctx.request.body
 		// 1.判断是否输入了账号和密码(一般由前端判断)
 		// console.log(account, password)
@@ -36,8 +38,9 @@ class AuthMiddleware {
 					state: user.state,
 					createAt: user.createAt,
 					updateAt: user.updateAt,
-					nickname: user.nickname || null,
+					nickname: user.nick_name || null,
 					avatar: user.avatar || null,
+					role_id: user._doc.role_id,
 				}
 				await next()
 			} else {
@@ -67,12 +70,11 @@ class AuthMiddleware {
 			}
 			const obj = {
 				...ctx.request.body,
-				role: "test",
-				state: 1,
-				user_id: Math.floor(Math.random() * 100000000),
+				// user_id: Math.floor(Math.random() * 100000000),
+				user_id: uuidv4(),
 				hashPassword: md5Password(password),
 			}
-			const res = await userModel.create(obj)
+			await userModel.create(obj)
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)

@@ -15,7 +15,7 @@ roleRouter.post(
 
 // 根据角色获取路由权限
 roleRouter.get(
-	"/menulist/:role_id",
+	"/menulist",
 	authMiddleware.verifyToken,
 	roleMiddleware.getMenuList,
 	roleController.getMenuList

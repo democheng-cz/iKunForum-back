@@ -1,12 +1,13 @@
 class ViewController {
 	// 根据分类id获取博客
 	getViewBlog(ctx, next) {
-		const { viewBlogList } = ctx
+		const { viewBlogList, total } = ctx
 		ctx.body = {
 			status: 200,
 			message: "请求成功",
 			result: {
 				data: viewBlogList,
+				total,
 			},
 		}
 	}

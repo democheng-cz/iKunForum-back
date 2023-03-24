@@ -14,7 +14,7 @@ class RoleMiddleware {
 
 	// 通过角色获取路由
 	async getMenuList(ctx, next) {
-		const { role_id } = ctx.request.params
+		const { role_id } = ctx.request.query
 		try {
 			const res = await roleModel.findOne({ role_id })
 			ctx.menuList = res.menuList

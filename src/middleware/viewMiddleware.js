@@ -4,15 +4,15 @@ const userModel = require("../model/user")
 class ViewMiddleware {
 	// 获取博客列表
 	async getViewBlog(ctx, next) {
-		const { pageSize, pageNo, category_id } = ctx.request.query
+		const { pageSize, category_id, count } = ctx.request.query
+		console.log(ctx.request.query)
 		const query = category_id ? { category_id } : {}
+		console.log(pageSize)
 		try {
-			const res = await blogModel
-				.find(query)
-				.skip((pageNo - 1) * pageSize)
-				.limit(pageSize)
-			// console.log(res)
+			const res = await blogModel.find(query).skip(count).limit(pageSize)
 			ctx.viewBlogList = res
+			const total = await blogModel.countDocuments(query)
+			ctx.total = total
 			await next()
 		} catch (error) {
 			return ctx.app.emit("error", new Error(error), ctx)
